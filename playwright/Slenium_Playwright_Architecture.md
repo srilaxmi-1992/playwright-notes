@@ -67,9 +67,9 @@ Playwright, developed by Microsoft in **2020**, is a modern automation framework
 
 4. Process flow:
    - Commands are converted into **JSON**
-   - Sent to Node.js server
+   - JSON messages Sent to Node.js server through WebSocket protocol.
    - Node.js directly interacts with:
-     - Browser binaries (Chromium, WebKit, Firefox)
+   - Browser binaries (Chromium, WebKit, Firefox)
 
 ---
 
