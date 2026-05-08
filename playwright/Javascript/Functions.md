@@ -149,6 +149,106 @@ console.log(add(10, 5));
 
 ---
 
+# IIFE (Immediately Invoked Function Expression)
+
+## 📌 Definition
+
+An **IIFE** is a JavaScript function that is executed immediately after it is defined.
+
+---
+
+## 🧾 Syntax
+
+```js
+(function () {
+  console.log("IIFE function");
+})();
+```
+
+---
+
+## ⚙️ How It Works
+
+* `function () { ... }` → defines a function
+* Wrapping in `( )` → converts it into an **expression**
+* Final `()` → **immediately invokes** the function
+
+---
+
+## 🎯 Why Use IIFE?
+
+* ✅ Prevents global scope pollution
+* ✅ Creates private variables (data hiding)
+* ✅ Executes code immediately
+* ✅ Useful for initialization logic
+
+---
+
+## 🔄 Variations
+
+### 1. Anonymous IIFE
+
+```js
+(function () {
+  console.log("Anonymous IIFE");
+})();
+```
+
+### 2. Named IIFE
+
+```js
+(function iife() {
+  console.log("Named IIFE");
+})();
+```
+
+### 3. Arrow Function IIFE
+
+```js
+(() => {
+  console.log("Arrow IIFE");
+})();
+```
+
+### 4. IIFE with Parameters
+
+```js
+(function (name) {
+  console.log("Hello " + name);
+})("John");
+```
+
+---
+
+## 📦 Example (Private Scope)
+
+```js
+const counter = (function () {
+  let count = 0;
+
+  return {
+    increment: function () {
+      count++;
+      return count;
+    }
+  };
+})();
+
+console.log(counter.increment()); // 1
+console.log(counter.increment()); // 2
+```
+
+👉 `count` is private and cannot be accessed directly.
+
+---
+
+## 🧠 Summary
+
+* IIFE = Function that runs immediately
+* Helps avoid global variables
+* Creates isolated scope
+* Common before ES6 modules
+
 
 
 ## 🔹 7. Key Notes (Best Practices)
