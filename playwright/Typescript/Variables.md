@@ -1,15 +1,12 @@
-# TypeScript Variables
+# TypeScript Variables — var vs let vs const
 
-## What is a Variable?
+TypeScript variables are similar to JavaScript variables, but TypeScript adds **static typing**.
 
-A variable is a container used to store data.
-
-TypeScript variables are almost similar to JavaScript variables, but TypeScript supports **static typing**.
-
-Static typing helps developers:
-- Catch errors early
-- Improve code readability
-- Get better IntelliSense support in editors
+Static typing helps:
+- Prevent runtime errors
+- Improve IntelliSense
+- Make code more readable
+- Improve large-scale application development
 
 ---
 
@@ -19,175 +16,180 @@ Static typing helps developers:
 keyword variableName: dataType = value;
 ```
 
-### Example
+## Example
 
 ```ts
 let username: string = "Sri";
 let age: number = 25;
-let isLoggedIn: boolean = true;
+let isActive: boolean = true;
 ```
 
 ---
 
-# Keywords Used for Variables
+# Type Inference in TypeScript
 
-TypeScript supports 3 keywords:
-
-- `var`
-- `let`
-- `const`
-
----
-
-# Data Types
-
-Common primitive data types in TypeScript:
-
-| Data Type | Example |
-|---|---|
-| string | `"hello"` |
-| number | `100` |
-| boolean | `true` |
-
----
-
-# Type Inference
-
-Declaring data types is optional in TypeScript because TS can automatically detect the type.
+TypeScript can automatically detect the datatype.
 
 ```ts
-let age = 8;
-console.log(age);
+let course = "TypeScript";
 ```
 
-TypeScript automatically infers:
+TypeScript infers:
 
 ```ts
-// age: number
+// course: string
 ```
 
 ---
 
-# Explicit Type Declaration
+# 1. var Keyword
 
-```ts
-let num: number = 20;
-console.log(num);
-```
+`var` is the old variable declaration keyword from ES5.
+
+In modern TypeScript projects, `var` is generally avoided because of scope-related issues.
 
 ---
-
-# var Keyword
-
-`var` is the old way of declaring variables before ES6.
 
 ## Features of var
 
-- Can be re-declared
-- Can be re-initialized
-- Supports hoisting
 - Function scoped
-- Not recommended in modern TypeScript/JavaScript
+- Can be re-declared
+- Can be reassigned
+- Supports hoisting
+- Not recommended in modern TS development
 
 ---
 
-## Example: var
+# TypeScript Example Using var
 
 ```ts
-var course = "TypeScript";
-var course = "JavaScript"; // Re-declaration allowed
+var employeeName: string = "Rahul";
 
-console.log(course);
+employeeName = "Kiran"; // Reassignment allowed
+
+var employeeName: string = "David"; // Re-declaration allowed
+
+console.log(employeeName);
 ```
 
 ---
 
-## Function Scope Example
+# Function Scope Example
 
 ```ts
-function test() {
-    var x = 50;
+function varExample(): void {
+
+    var department: string = "Engineering";
 
     if (true) {
-        var y = 90;
 
-        console.log(x); // 50
-        console.log(y); // 90
+        var manager: string = "John";
+
+        console.log(department);
+        console.log(manager);
     }
 
-    // Accessible outside block because var is function scoped
-    console.log(y);
+    // Accessible outside block
+    console.log(manager);
 }
 
-test();
+varExample();
 ```
 
 ---
 
 # Hoisting with var
 
-Variables declared using `var` are hoisted and initialized with `undefined`.
-
 ```ts
-console.log(user); // undefined
+console.log(userName); // undefined
 
-var user = "Sri";
+var userName: string = "Sri";
 ```
 
 Internally:
 
 ```ts
-var user;
-console.log(user);
+var userName: string;
 
-user = "Sri";
+console.log(userName);
+
+userName = "Sri";
 ```
 
 ---
 
-# let Keyword
+# Problems with var
 
-`let` was introduced in ES6 and is recommended for mutable values.
+```ts
+for (var i: number = 1; i <= 3; i++) {
+
+    setTimeout(() => {
+        console.log(i);
+    }, 1000);
+}
+```
+
+## Output
+
+```ts
+4
+4
+4
+```
+
+Reason:
+- `var` is function scoped
+- Same variable reference is shared
+
+---
+
+# 2. let Keyword
+
+`let` was introduced in ES6 and is recommended for mutable variables.
+
+---
 
 ## Features of let
 
+- Block scoped
 - Cannot be re-declared in same scope
 - Can be reassigned
-- Block scoped
-- Hoisted but stays in Temporal Dead Zone (TDZ)
+- Hoisted but exists in TDZ
 
 ---
 
-## Example: let
+# TypeScript Example Using let
 
 ```ts
-let city = "Hyderabad";
+let studentName: string = "Anu";
 
-city = "Bangalore"; // Allowed
+studentName = "Keerthi"; // Allowed
 
-console.log(city);
+console.log(studentName);
 ```
 
 ---
 
-## Block Scope Example
+# Block Scope Example
 
 ```ts
-function letTest() {
-    let x = 5;
+function letExample(): void {
+
+    let company: string = "Google";
 
     if (true) {
-        let y = 2;
 
-        console.log(x); // 5
-        console.log(y); // 2
+        let location: string = "Hyderabad";
+
+        console.log(company);
+        console.log(location);
     }
 
-    // Error: y is block scoped
-    // console.log(y);
+    // Error
+    // console.log(location);
 }
 
-letTest();
+letExample();
 ```
 
 ---
@@ -195,102 +197,181 @@ letTest();
 # Hoisting with let
 
 ```ts
-// console.log(emp); // Error
+// console.log(product); // Error
 
-let emp = "Yuvika";
+let product: string = "Laptop";
 ```
 
 Reason:
 - `let` variables are hoisted
 - But cannot be accessed before declaration
-- This phase is called Temporal Dead Zone (TDZ)
+- This is called Temporal Dead Zone (TDZ)
 
 ---
 
-# const Keyword
+# let Solves var Problem
 
-`const` is used for constant values.
+```ts
+for (let i: number = 1; i <= 3; i++) {
+
+    setTimeout(() => {
+        console.log(i);
+    }, 1000);
+}
+```
+
+## Output
+
+```ts
+1
+2
+3
+```
+
+Reason:
+- `let` creates separate block-scoped variables
+
+---
+
+# 3. const Keyword
+
+`const` is used for values that should not change.
+
+---
 
 ## Features of const
 
-- Cannot be re-declared
-- Cannot be reassigned
 - Block scoped
-- Best choice for values that should not change
+- Cannot be reassigned
+- Cannot be re-declared
+- Must initialize during declaration
 
 ---
 
-## Example: const
+# TypeScript Example Using const
 
 ```ts
-const PI = 3.14;
+const companyName: string = "OpenAI";
 
-console.log(PI);
-
-// PI = 5; // Error
+console.log(companyName);
 ```
 
 ---
 
-# Real-Time Examples
-
-## User Profile
+# Reassignment Error
 
 ```ts
-const username: string = "john_doe";
-let loginCount: number = 10;
-let isPremiumUser: boolean = true;
+const PI: number = 3.14;
 
-console.log(username);
-console.log(loginCount);
-console.log(isPremiumUser);
+// Error
+// PI = 5;
 ```
 
 ---
 
-## E-Commerce Product
+# const with Objects
+
+Important:
+- Object reference cannot change
+- But object properties can change
 
 ```ts
-const productName: string = "iPhone 15";
-let productPrice: number = 79999;
-let inStock: boolean = true;
+const user: {
+    name: string;
+    age: number;
+} = {
+    name: "Sri",
+    age: 25
+};
 
-console.log(productName);
-console.log(productPrice);
-console.log(inStock);
+user.age = 26; // Allowed
+
+console.log(user);
 ```
 
 ---
 
+# Real-Time TypeScript Examples
 
+# Employee Management
 
-# Best Practices
+```ts
+const company: string = "Infosys";
+
+let employeeCount: number = 1200;
+
+employeeCount += 50;
+
+console.log(company);
+console.log(employeeCount);
+```
+
+---
+
+# Banking Application
+
+```ts
+let accountBalance: number = 50000;
+
+accountBalance -= 10000;
+
+console.log(accountBalance);
+```
+
+---
+
+# E-Commerce Product
+
+```ts
+const productId: number = 101;
+
+let stockAvailable: boolean = true;
+
+console.log(productId);
+console.log(stockAvailable);
+```
+
+---
+
+# var vs let vs const
+
+| Feature | var | let | const |
+|---|---|---|---|
+| Scope | Function | Block | Block |
+| Re-declare | Yes | No | No |
+| Reassign | Yes | Yes | No |
+| Hoisting | Yes | Yes (TDZ) | Yes (TDZ) |
+| Modern Usage | Avoid | Preferred | Most Preferred |
+
+---
+
+# Best Practices in TypeScript
 
 ✅ Use `const` by default  
 ✅ Use `let` when value changes  
-❌ Avoid using `var` in modern TypeScript
+❌ Avoid using `var`  
+
+---
+
+# Recommended Modern TS Style
+
+```ts
+const appName: string = "Netflix";
+
+let totalUsers: number = 1000000;
+
+totalUsers += 5000;
+
+console.log(appName);
+console.log(totalUsers);
+```
 
 ---
 
 # Summary
 
-- Variables store data
-- TypeScript supports static typing
-- `let` and `const` are preferred over `var`
-- Type inference makes TypeScript smarter
-- Block scope improves code safety
-
----
-
-# Final Example
-
-```ts
-const companyName: string = "OpenAI";
-
-let employeeCount: number = 1200;
-
-employeeCount += 100;
-
-console.log(companyName);
-console.log(employeeCount);
-```
+- `var` → old, function scoped, avoid
+- `let` → mutable values
+- `const` → fixed references
+- TypeScript adds static typing for better safety
+- Modern TS projects mostly use `let` and `const`
